@@ -1,0 +1,92 @@
+<div class="min-h-screen flex items-center justify-center px-4 py-8">
+  <div class="max-w-4xl w-full">
+    <div class="text-center mb-8">
+      <h1 class="text-4xl font-bold mb-2">Choose Your Training Split</h1>
+      <p class="text-gray-400">Select the program that fits your goals</p>
+    </div>
+
+    <%= form_with url: onboarding_split_path, method: :post, class: "space-y-6" do |f| %>
+      <div class="grid md:grid-cols-2 gap-6">
+        <!-- PPL Split Card -->
+        <label class="card cursor-pointer hover:border-brand-purple transition-all duration-200 border-2 border-transparent">
+          <%= f.radio_button :split_id, TrainingSplit.find_by(name: "PPL")&.id, class: "hidden peer", required: true %>
+          <div class="peer-checked:border-brand-purple peer-checked:bg-brand-purple/10 rounded-lg p-1 -m-1">
+            <div class="flex items-start gap-3 mb-4">
+              <div class="bg-brand-purple rounded-lg p-3">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-2xl font-bold">PPL Split</h3>
+                <p class="text-sm text-brand-purple">Push • Pull • Legs</p>
+              </div>
+            </div>
+
+            <p class="text-gray-400 mb-4">
+              A 3-day rotation focusing on pushing movements, pulling movements, and leg exercises.
+              Perfect for balanced muscle development.
+            </p>
+
+            <div class="space-y-2">
+              <div class="flex items-center gap-2 text-sm">
+                <span class="w-2 h-2 bg-brand-purple rounded-full"></span>
+                <span>Day 1: Push (Chest, Shoulders, Triceps)</span>
+              </div>
+              <div class="flex items-center gap-2 text-sm">
+                <span class="w-2 h-2 bg-brand-purple rounded-full"></span>
+                <span>Day 2: Pull (Back, Biceps)</span>
+              </div>
+              <div class="flex items-center gap-2 text-sm">
+                <span class="w-2 h-2 bg-brand-purple rounded-full"></span>
+                <span>Day 3: Legs (Quads, Hamstrings, Calves)</span>
+              </div>
+            </div>
+          </div>
+        </label>
+
+        <!-- Arnold Split Card -->
+        <label class="card cursor-pointer hover:border-brand-purple transition-all duration-200 border-2 border-transparent">
+          <%= f.radio_button :split_id, TrainingSplit.find_by(name: "Arnold")&.id, class: "hidden peer", required: true %>
+          <div class="peer-checked:border-brand-purple peer-checked:bg-brand-purple/10 rounded-lg p-1 -m-1">
+            <div class="flex items-start gap-3 mb-4">
+              <div class="bg-gradient-to-br from-yellow-500 to-orange-500 rounded-lg p-3">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
+                </svg>
+              </div>
+              <div>
+                <h3 class="text-2xl font-bold">Arnold Split</h3>
+                <p class="text-sm text-yellow-500">Classic Bodybuilding</p>
+              </div>
+            </div>
+
+            <p class="text-gray-400 mb-4">
+              Arnold Schwarzenegger's classic split. Train antagonistic muscle groups together
+              for maximum pump and growth.
+            </p>
+
+            <div class="space-y-2">
+              <div class="flex items-center gap-2 text-sm">
+                <span class="w-2 h-2 bg-yellow-500 rounded-full"></span>
+                <span>Day 1: Chest & Back</span>
+              </div>
+              <div class="flex items-center gap-2 text-sm">
+                <span class="w-2 h-2 bg-yellow-500 rounded-full"></span>
+                <span>Day 2: Shoulders & Arms</span>
+              </div>
+              <div class="flex items-center gap-2 text-sm">
+                <span class="w-2 h-2 bg-yellow-500 rounded-full"></span>
+                <span>Day 3: Legs</span>
+              </div>
+            </div>
+          </div>
+        </label>
+      </div>
+
+      <div class="text-center">
+        <%= f.submit "Continue", class: "btn-primary text-lg px-8 py-3" %>
+      </div>
+    <% end %>
+  </div>
+</div>

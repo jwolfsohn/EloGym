@@ -1,0 +1,32 @@
+source "https://rubygems.org"
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
+
+ruby "~> 3.2.0"
+
+gem "rails", "~> 7.1.0"
+gem "pg", "~> 1.5"
+gem "puma", "~> 6.0"
+
+# Auth
+gem "bcrypt", "~> 3.1.7"
+gem "jwt"
+
+# JSON serialization
+gem "blueprinter"
+
+# Frontend
+gem "turbo-rails"
+gem "stimulus-rails"
+gem "tailwindcss-rails"
+gem "importmap-rails"
+
+# Reduces boot times through caching; required in config/boot.rb
+gem "bootsnap", require: false
+
+group :development, :test do
+  gem "debug", platforms: %i[ mri mingw x64_mingw ]
+end
+
+group :development do
+  gem "web-console"
+end

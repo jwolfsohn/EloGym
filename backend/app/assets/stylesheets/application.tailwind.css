@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-zinc-900 text-gray-100;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-brand-purple hover:bg-purple-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors duration-200;
+  }
+
+  .btn-secondary {
+    @apply bg-zinc-800 hover:bg-zinc-700 text-gray-100 font-semibold py-2 px-4 rounded-lg transition-colors duration-200;
+  }
+
+  .card {
+    @apply bg-zinc-800 rounded-xl p-6 shadow-lg border border-zinc-700;
+  }
+
+  .card-glass {
+    @apply bg-zinc-800/50 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-zinc-700/50;
+  }
+
+  .input-field {
+    @apply bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2 text-gray-100 focus:outline-none focus:ring-2 focus:ring-brand-purple focus:border-transparent;
+  }
+
+  .nav-link {
+    @apply flex flex-col items-center justify-center text-gray-400 hover:text-brand-purple transition-colors duration-200;
+  }
+
+  .nav-link.active {
+    @apply text-brand-purple;
+  }
+
+  .rank-badge {
+    @apply inline-flex items-center justify-center w-12 h-12 rounded-full font-bold text-xl;
+  }
+
+  .rank-S {
+    @apply bg-gradient-to-br from-yellow-400 to-orange-500 text-white;
+  }
+
+  .rank-A {
+    @apply bg-gradient-to-br from-purple-500 to-pink-500 text-white;
+  }
+
+  .rank-B {
+    @apply bg-gradient-to-br from-blue-500 to-cyan-500 text-white;
+  }
+
+  .rank-C {
+    @apply bg-gradient-to-br from-green-500 to-emerald-500 text-white;
+  }
+
+  .rank-D {
+    @apply bg-gradient-to-br from-gray-500 to-gray-600 text-white;
+  }
+
+  .rank-E {
+    @apply bg-gradient-to-br from-zinc-600 to-zinc-700 text-white;
+  }
+}

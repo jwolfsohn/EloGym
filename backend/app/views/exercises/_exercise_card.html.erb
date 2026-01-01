@@ -1,0 +1,47 @@
+<div class="card <%= 'opacity-50' if completed %>" id="exercise-<%= exercise.id %>" data-controller="confetti">
+  <div class="flex items-start justify-between">
+    <div class="flex-1">
+      <h4 class="text-xl font-semibold mb-2"><%= exercise.name %></h4>
+
+      <div class="space-y-1 text-gray-400">
+        <p>
+          <span class="font-medium">Muscle Group:</span>
+          <%= exercise.muscle_group %>
+        </p>
+        <p>
+          <span class="font-medium">Equipment:</span>
+          <%= exercise.equipment %>
+        </p>
+        <p class="text-brand-purple font-semibold text-lg mt-3">
+          Target: 3 Sets × 5 Reps @ <%= exercise.target_weight_for_user(user) %> lbs
+        </p>
+      </div>
+    </div>
+
+    <div>
+      <% if completed %>
+        <div class="flex items-center gap-2 text-green-400">
+          <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+          </svg>
+          <span class="font-semibold">Completed!</span>
+        </div>
+      <% else %>
+        <%= button_to "Complete",
+          api_users_complete_exercise_path,
+          params: { exercise_id: exercise.id },
+          method: :post,
+          class: "btn-primary",
+          data: {
+            turbo_method: :post,
+            action: "click->confetti#fire"
+          },
+          form: {
+            data: {
+              turbo_frame: "_top"
+            }
+          } %>
+      <% end %>
+    </div>
+  </div>
+</div>

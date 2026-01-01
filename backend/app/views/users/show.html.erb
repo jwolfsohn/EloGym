@@ -1,0 +1,126 @@
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <!-- Profile Header -->
+  <div class="card mb-8">
+    <div class="flex flex-col md:flex-row items-center gap-6">
+      <div class="flex-shrink-0">
+        <div class="w-24 h-24 bg-gradient-to-br from-brand-purple to-pink-500 rounded-full flex items-center justify-center">
+          <span class="text-4xl font-bold text-white"><%= @user.username[0].upcase %></span>
+        </div>
+      </div>
+
+      <div class="flex-1 text-center md:text-left">
+        <h1 class="text-3xl font-bold mb-2"><%= @user.username %></h1>
+        <div class="flex items-center gap-4 justify-center md:justify-start">
+          <div class="flex items-center gap-2">
+            <span class="text-gray-400">Rank:</span>
+            <span class="rank-badge rank-<%= @user.rank %> text-xl w-10 h-10"><%= @user.rank %></span>
+          </div>
+          <div>
+            <span class="text-gray-400">Total Points:</span>
+            <span class="text-xl font-bold text-brand-purple"><%= @stats[:total_points] %></span>
+          </div>
+        </div>
+      </div>
+
+      <% if current_user.id == @user.id %>
+        <div class="flex-shrink-0">
+          <%= link_to "Logout", logout_path, data: { turbo_method: :delete }, class: "btn-secondary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Stats Grid -->
+  <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+    <div class="card">
+      <div class="text-center">
+        <svg class="w-12 h-12 mx-auto mb-2 text-brand-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+        </svg>
+        <p class="text-3xl font-bold text-brand-purple"><%= @stats[:total_points] %></p>
+        <p class="text-sm text-gray-400">Total Points</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="text-center">
+        <svg class="w-12 h-12 mx-auto mb-2 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <p class="text-3xl font-bold text-green-500"><%= @stats[:completed_exercises] %></p>
+        <p class="text-sm text-gray-400">Workouts Completed</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="text-center">
+        <svg class="w-12 h-12 mx-auto mb-2 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+        <p class="text-3xl font-bold text-blue-500"><%= @stats[:friends_count] %></p>
+        <p class="text-sm text-gray-400">Friends</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="text-center">
+        <svg class="w-12 h-12 mx-auto mb-2 text-purple-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+        </svg>
+        <p class="text-3xl font-bold text-purple-500"><%= @stats[:bodyweight] || "N/A" %></p>
+        <p class="text-sm text-gray-400">Bodyweight (lbs)</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Training Split -->
+  <div class="card mb-8">
+    <h2 class="text-2xl font-bold mb-4">Training Split</h2>
+    <% if @user.training_splits.any? %>
+      <div class="bg-zinc-900 rounded-lg p-4 border border-brand-purple">
+        <h3 class="text-xl font-semibold text-brand-purple mb-2">
+          <%= @user.training_splits.first.name %>
+        </h3>
+        <p class="text-gray-400"><%= @user.training_splits.first.description %></p>
+      </div>
+    <% else %>
+      <p class="text-gray-400">No training split assigned</p>
+      <% if current_user.id == @user.id %>
+        <%= link_to "Set Up Split", onboarding_split_path, class: "btn-primary mt-4 inline-block" %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <!-- Rank Progress -->
+  <div class="card">
+    <h2 class="text-2xl font-bold mb-4">Rank Progress</h2>
+    <div class="space-y-4">
+      <% [
+        { rank: "E", min: 0, max: 499, color: "zinc" },
+        { rank: "D", min: 500, max: 999, color: "gray" },
+        { rank: "C", min: 1000, max: 1999, color: "green" },
+        { rank: "B", min: 2000, max: 3499, color: "blue" },
+        { rank: "A", min: 3500, max: 5499, color: "purple" },
+        { rank: "S", min: 5500, max: Float::INFINITY, color: "yellow" }
+      ].each do |rank_info| %>
+        <div class="flex items-center gap-3">
+          <span class="rank-badge rank-<%= rank_info[:rank] %> w-10 h-10 text-sm"><%= rank_info[:rank] %></span>
+          <div class="flex-1">
+            <div class="flex justify-between text-sm mb-1">
+              <span><%= rank_info[:rank] %> Rank</span>
+              <span class="text-gray-400"><%= rank_info[:min] %>-<%= rank_info[:max] == Float::INFINITY ? "∞" : rank_info[:max] %> pts</span>
+            </div>
+            <div class="bg-zinc-700 rounded-full h-2">
+              <% if @user.rank == rank_info[:rank] %>
+                <% progress = [(((@user.total_points - rank_info[:min]).to_f / (rank_info[:max] - rank_info[:min])) * 100).round, 100].min %>
+                <div class="bg-brand-purple rounded-full h-2 transition-all duration-300" style="width: <%= progress %>%"></div>
+              <% elsif @user.total_points > rank_info[:max] %>
+                <div class="bg-zinc-600 rounded-full h-2" style="width: 100%"></div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

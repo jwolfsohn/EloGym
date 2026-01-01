@@ -1,0 +1,65 @@
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <!-- Stats Header -->
+  <div class="card mb-8">
+    <div class="flex items-center justify-between">
+      <div>
+        <h2 class="text-3xl font-bold mb-2">Welcome, <%= @user.username %>!</h2>
+        <div class="flex items-center gap-4">
+          <div class="flex items-center gap-2">
+            <span class="text-gray-400">Rank:</span>
+            <span class="rank-badge rank-<%= @user.rank %> text-2xl"><%= @user.rank %></span>
+          </div>
+          <div>
+            <span class="text-gray-400">Points:</span>
+            <span class="text-2xl font-bold text-brand-purple"><%= @user.total_points %></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Date Navigator -->
+  <turbo-frame id="workout-frame">
+    <div class="card mb-8">
+      <div class="flex items-center justify-between">
+        <%= link_to dashboard_path(date: @date - 1.day), class: "btn-secondary" do %>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        <% end %>
+
+        <div class="text-center">
+          <h3 class="text-xl font-semibold"><%= @date.strftime("%A, %B %d") %></h3>
+          <% if @training_day %>
+            <p class="text-brand-purple"><%= @training_day.day_name %> Day</p>
+          <% else %>
+            <p class="text-yellow-500">No training split assigned</p>
+          <% end %>
+        </div>
+
+        <%= link_to dashboard_path(date: @date + 1.day), class: "btn-secondary" do %>
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        <% end %>
+      </div>
+    </div>
+
+    <!-- Workout List -->
+    <div class="space-y-4">
+      <% if @exercises.any? %>
+        <h3 class="text-2xl font-bold mb-4">Today's Exercises</h3>
+        <% @exercises.each do |exercise| %>
+          <%= render partial: "exercises/exercise_card", locals: { exercise: exercise, user: @user, completed: @completed_today.include?(exercise.id), date: @date } %>
+        <% end %>
+      <% else %>
+        <div class="card text-center py-12">
+          <p class="text-xl text-gray-400 mb-4">No exercises for today</p>
+          <% unless @user.training_splits.any? %>
+            <%= link_to "Set Up Training Split", onboarding_split_path, class: "btn-primary" %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </turbo-frame>
+</div>

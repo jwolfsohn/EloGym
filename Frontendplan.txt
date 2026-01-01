@@ -1,0 +1,58 @@
+Role: You are an expert Ruby on Rails Frontend Developer and UI/UX Designer.
+
+Task: Create the Frontend for the "EloGym" web application using Ruby on Rails 7+ with Hotwire (Turbo & Stimulus) and TailwindCSS. This frontend should be integrated directly into the Rails backend we previously defined (Monolithic architecture).
+
+1. Design & Tech Stack Philosophy
+Framework: Ruby on Rails 7+ (Server-Side Rendered ERB).
+Interactivity: Hotwire (Turbo Drive, Turbo Frames, Turbo Streams). Use Stimulus for small DOM manipulations.
+Styling: TailwindCSS for rapid, modern, utility-first styling. The design aesthetic should be "Dark Mode & Premium" (Dark grays bg-zinc-900, Purple accents text-purple-500, Rounded corners, Glassmorphism).
+Icons: Use heroicons or font-awesome helpers.
+
+2. Key Layouts & Navigation
+Global Layout (application.html.erb)
+Top Nav: Minimalist. Shows the "Profile" link/avatar in the top-right.
+Bottom Nav (Sticky Footer):
+Dashboard (Home icon)
+Matchmaking (Swords/Battle icon)
+Rank (Trophy/Chart icon)
+Conditional Rendering: Hide navigation on "Onboarding", "Login", and "Signup" pages.
+
+3. Core Views to Implement
+
+A. Dashboard (dashboard#index)
+This is the main landing page.
+
+Date Navigator: A centralized date picker (Previous Day < [ Today ] > Next Day). Use a Turbo Frame here so clicking next/prev only updates the workout list, not the whole page.
+Stats Header: Displays current "Rank" (S/A/B...) and "Total Points".
+Workout List:
+Render a partial exercises/_exercise_card.html.erb for each active exercise.
+Exercise Card:
+Name (e.g., "Bench Press")
+Target Specs (e.g., "3 Sets x 5 Reps @ 135 lbs")
+"Complete" Button: Uses Turbo Stream to mark the exercise done, update the user's points in real-time, and grey out the card without a page reload.
+
+B. Onboarding Flow (Wizard)
+Welcome Page: Hero text + "Get Started" button.
+Split Selection: Card selection for "PPL" vs "Arnold". Action saves preference via AJAX.
+Starting Stats: Form to input initial Max Lifts (Bench, Squat, etc.) to calibrate the Elo system.
+
+C. Matchmaking / Social (battles#index)
+Friends List: Iterate through friends. Button to "Challenge".
+Active Battles: List of pending/ongoing battles.
+Search: A search bar to find users. Use a Stimulus controller to debounce input and search via Turbo Frame.
+
+D. User Profile (users#show)
+Avatar/Rank Badge: Large visual display of current Rank.
+Stats Grid: Best lifts, Join date, Friends count.
+Settings: Links to edit profile (password, email).
+
+4. Specific Javascript/Stimulus Requirements
+confetti_controller.js: Trigger a confetti explosion (using a library like canvas-confetti) when a workout is fully completed or a rank is updated.
+modal_controller.js: Standard Close/Open logic for the "Battle Challenge" popup.
+toggle_controller.js: For switching between "Demo Mode" and "Real Mode" on the dashboard (if you choose to keep that feature).
+
+5. Deliverables
+Layout File: app/views/layouts/application.html.erb with the navigation logic.
+View Templates: The high-level ERB files for Dashboard, Profile, and Battles.
+Partials: Reusable _exercise.html.erb and _friend.html.erb.
+Tailwind Configuration: Ensure the generic tailwind.config.js includes the specific color palette (Brand Purple: #7c3aed, Background: #1e1e1e).

@@ -1,0 +1,93 @@
+Prompt for Claude Code
+Role: You are an expert Ruby on Rails Backend Developer.
+
+Task: create the backend for an application called "EloGym" using Ruby on Rails (API mode). The current application uses Node.js, Express, and PostgreSQL. Your task is to build the server logic and database structure in Rails.
+
+1. Project Overview
+GymElo is a fitness tracking and social workout application that gamifies fitness with an Elo rating system. Key features include:
+
+Personalized Workouts: Users get daily exercises based on a training split (PPL or Arnold).
+Elo System: Users have rankings (S, A, B, C, D, E) which affect their difficulty.
+Social: Friends system and "Battles" where users compete on lifts.
+
+2. Technical Stack Requirements
+Framework: Ruby on Rails 7+ (API Mode)
+Database: PostgreSQL
+Authentication: JWT + Bcrypt (Implement a Service or use devise-jwt to match endpoints)
+JSON Serialization: Use blueprinter or standard Rails as_json to match the API responses.
+
+3. Database Schema (Models needed)
+Please create Migrations and ActiveRecord Models for the following structure:
+
+    1. Users
+    username (string, unique), email (string, unique), password_digest (string), total_points (integer, default 0), bodyweight (decimal), is_admin (boolean), created_at.
+
+    2. TrainingSplits
+    name (string, e.g., "PPL", "Arnold"), description (text).
+
+    3. UserSplits
+    user_id (FK), split_id (FK).
+
+    4. Exercises
+    name (string), muscle_group (string), equipment (string), instructions (text).
+
+    5. TrainingDays
+    split_id (FK), day_name (string), day_order (integer).
+    Logic: Defines the rotation (e.g., Push -> Pull -> Legs).
+
+    6. DayExercises
+    day_id (FK), exercise_id (FK).
+
+    7. CompletedExercises
+    user_id (FK), exercise_id (FK), completed_at (date).
+
+    8. Friends
+    Self-referential join table for Users.
+
+    9. Battles
+    challenger_id (FK User), opponent_id (FK User), winner_id (FK User), status (enum: pending, completed, declined), points_gained (int), points_lost (int).
+
+4. Key Business Logic to Implement
+    A. Dynamic Weight Calculation (Service Object)
+    Create a Service Object (e.g., ExerciseWeighter) to calculate target weights. Logic:
+
+    Base Multipliers:
+    Bench Press: 0.75, Squat: 0.85, Deadlift: 1.0, Overhead Press: 0.45, Barbell Row: 0.65
+    Isolation movements (Curls, Raises): ~0.1 - 0.2
+    Default: 0.3
+
+    Rank Multipliers (Based on User Rank):
+    S: 2.2, A: 1.8, B: 1.6, C: 1.25, D: 1.0, E: 0.5
+
+    Formula: Round((UserBodyweight * BaseMultiplier * RankMultiplier) / 5) * 5
+
+    B. Daily Workout Rotation
+    Endpoint: GET /api/users/daily-exercises
+    Logic: Determine the current day in the user's split rotation. Fetch 3 random exercises from that specific TrainingDay logic.
+
+    C. Authentication
+    Standard Signup/Login returning a JWT token.
+
+5. API Endpoints (Must Match)
+Auth:
+POST /api/users/signup
+POST /api/users/login
+
+User:
+GET /api/users/profile
+PATCH /api/users/split (Assign PPL or Arnold split)
+POST /api/users/starting-stats
+GET /api/users/daily-exercises
+POST /api/users/complete-exercise
+
+Social:
+GET /api/matchmaking/friends
+POST /api/matchmaking/friends/add
+GET /api/matchmaking/search
+POST /api/matchmaking/battle/challenge
+
+6. Deliverables
+Migration Files: For all tables defined above.
+Models: With correct association macros (has_many, belongs_to, has_many :through).
+Seeds: A seeds.rb file that populates the default PPL and Arnold splits, days, and basic exercises.
+Controllers: Basic implementation of the DailyExercises logic.

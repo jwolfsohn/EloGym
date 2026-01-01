@@ -1,0 +1,50 @@
+<div class="bg-zinc-900 rounded-lg p-4 flex items-center justify-between border border-zinc-700 hover:border-brand-purple/50 transition-colors">
+  <div class="flex items-center gap-3">
+    <span class="rank-badge rank-<%= friend.rank %>"><%= friend.rank %></span>
+    <div>
+      <p class="font-semibold"><%= friend.username %></p>
+      <p class="text-sm text-gray-400"><%= friend.total_points %> points</p>
+    </div>
+  </div>
+
+  <button
+    class="btn-primary text-sm"
+    onclick="openChallengeModal('<%= friend.username %>', <%= friend.id %>)"
+  >
+    Challenge
+  </button>
+</div>
+
+<script>
+  function openChallengeModal(username, userId) {
+    const modal = document.getElementById('challenge-modal');
+    const modalController = modal.closest('[data-controller="modal"]');
+    const usernameSpan = document.getElementById('challenge-username');
+    const confirmButton = document.getElementById('confirm-challenge');
+
+    usernameSpan.textContent = username;
+
+    confirmButton.onclick = function() {
+      fetch('/api/matchmaking/battle/challenge', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': document.querySelector('[name="csrf-token"]').content
+        },
+        body: JSON.stringify({ opponent_id: userId })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.message) {
+          alert(data.message);
+          location.reload();
+        } else if (data.error) {
+          alert(data.error);
+        }
+      });
+    };
+
+    // Trigger the modal open
+    Stimulus.getControllerForElementAndIdentifier(modalController, 'modal').open();
+  }
+</script>

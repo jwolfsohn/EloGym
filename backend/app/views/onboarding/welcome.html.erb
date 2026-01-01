@@ -1,0 +1,55 @@
+<div class="min-h-screen flex items-center justify-center px-4">
+  <div class="max-w-2xl w-full text-center">
+    <h1 class="text-6xl font-bold mb-4 bg-gradient-to-r from-brand-purple to-pink-500 bg-clip-text text-transparent">
+      Welcome to EloGym
+    </h1>
+
+    <p class="text-2xl text-gray-300 mb-8">
+      Gamify your fitness journey with our Elo rating system
+    </p>
+
+    <div class="card-glass mb-8 text-left">
+      <h2 class="text-2xl font-bold mb-4">How it works:</h2>
+      <ul class="space-y-4">
+        <li class="flex items-start gap-3">
+          <svg class="w-6 h-6 text-brand-purple flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+          </svg>
+          <div>
+            <span class="font-semibold text-brand-purple">Choose Your Split:</span>
+            <span class="text-gray-300"> Select between PPL or Arnold training programs</span>
+          </div>
+        </li>
+        <li class="flex items-start gap-3">
+          <svg class="w-6 h-6 text-brand-purple flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+          </svg>
+          <div>
+            <span class="font-semibold text-brand-purple">Complete Daily Workouts:</span>
+            <span class="text-gray-300"> Get 3 exercises per day based on your split rotation</span>
+          </div>
+        </li>
+        <li class="flex items-start gap-3">
+          <svg class="w-6 h-6 text-brand-purple flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+          </svg>
+          <div>
+            <span class="font-semibold text-brand-purple">Earn Points & Rank Up:</span>
+            <span class="text-gray-300"> Progress from E to S rank as you complete workouts</span>
+          </div>
+        </li>
+        <li class="flex items-start gap-3">
+          <svg class="w-6 h-6 text-brand-purple flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+          </svg>
+          <div>
+            <span class="font-semibold text-brand-purple">Challenge Friends:</span>
+            <span class="text-gray-300"> Compete in battles and climb the leaderboard</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <%= link_to "Get Started", onboarding_split_path, class: "btn-primary text-xl px-8 py-4" %>
+  </div>
+</div>

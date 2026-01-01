@@ -1,0 +1,42 @@
+<div class="min-h-screen flex items-center justify-center px-4">
+  <div class="max-w-md w-full">
+    <div class="text-center mb-8">
+      <h1 class="text-4xl font-bold mb-2">Starting Stats</h1>
+      <p class="text-gray-400">Enter your bodyweight to calculate target weights</p>
+    </div>
+
+    <div class="card">
+      <%= form_with url: onboarding_stats_path, method: :post, class: "space-y-6" do |f| %>
+        <div>
+          <label class="block text-sm font-medium mb-2">
+            Bodyweight (lbs)
+          </label>
+          <%= f.number_field :bodyweight,
+            step: 0.1,
+            min: 50,
+            max: 500,
+            required: true,
+            class: "input-field w-full text-2xl text-center",
+            placeholder: "180" %>
+          <p class="text-sm text-gray-400 mt-2">
+            This will be used to calculate your personalized target weights based on your rank
+          </p>
+        </div>
+
+        <div class="bg-zinc-900/50 rounded-lg p-4">
+          <h3 class="font-semibold mb-2 text-brand-purple">How it works:</h3>
+          <p class="text-sm text-gray-400">
+            Target weights are calculated using your bodyweight, exercise type, and current rank.
+            As you complete workouts and rank up, your target weights will automatically increase!
+          </p>
+        </div>
+
+        <%= f.submit "Complete Setup", class: "btn-primary w-full text-lg py-3" %>
+      <% end %>
+    </div>
+
+    <div class="text-center mt-6">
+      <%= link_to "Skip for now", dashboard_path, class: "text-gray-400 hover:text-brand-purple transition-colors" %>
+    </div>
+  </div>
+</div>
