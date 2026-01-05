@@ -1,55 +1,35 @@
-<div class="min-h-screen flex items-center justify-center px-4">
-  <div class="max-w-2xl w-full text-center">
-    <h1 class="text-6xl font-bold mb-4 bg-gradient-to-r from-brand-purple to-pink-500 bg-clip-text text-transparent">
-      Welcome to EloGym
-    </h1>
+<div class="min-h-screen flex items-center justify-center relative overflow-hidden">
+  <%# Background Elements %>
+  <div class="absolute top-0 left-1/4 w-96 h-96 bg-electric/10 rounded-full blur-3xl animate-pulse"></div>
+  <div class="absolute bottom-0 right-1/4 w-96 h-96 bg-neon-lime/10 rounded-full blur-3xl animate-pulse" style="animation-delay: 1s;"></div>
 
-    <p class="text-2xl text-gray-300 mb-8">
-      Gamify your fitness journey with our Elo rating system
-    </p>
-
-    <div class="card-glass mb-8 text-left">
-      <h2 class="text-2xl font-bold mb-4">How it works:</h2>
-      <ul class="space-y-4">
-        <li class="flex items-start gap-3">
-          <svg class="w-6 h-6 text-brand-purple flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-          </svg>
-          <div>
-            <span class="font-semibold text-brand-purple">Choose Your Split:</span>
-            <span class="text-gray-300"> Select between PPL or Arnold training programs</span>
-          </div>
-        </li>
-        <li class="flex items-start gap-3">
-          <svg class="w-6 h-6 text-brand-purple flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-          </svg>
-          <div>
-            <span class="font-semibold text-brand-purple">Complete Daily Workouts:</span>
-            <span class="text-gray-300"> Get 3 exercises per day based on your split rotation</span>
-          </div>
-        </li>
-        <li class="flex items-start gap-3">
-          <svg class="w-6 h-6 text-brand-purple flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-          </svg>
-          <div>
-            <span class="font-semibold text-brand-purple">Earn Points & Rank Up:</span>
-            <span class="text-gray-300"> Progress from E to S rank as you complete workouts</span>
-          </div>
-        </li>
-        <li class="flex items-start gap-3">
-          <svg class="w-6 h-6 text-brand-purple flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-          </svg>
-          <div>
-            <span class="font-semibold text-brand-purple">Challenge Friends:</span>
-            <span class="text-gray-300"> Compete in battles and climb the leaderboard</span>
-          </div>
-        </li>
-      </ul>
+  <div class="max-w-md w-full relative z-10 p-8 text-center">
+    <div class="mb-12">
+      <h1 class="font-display text-8xl text-transparent bg-clip-text bg-gradient-to-r from-electric to-neon-lime tracking-wider mb-4 animate-slide-up">
+        ELOGYM
+      </h1>
+      <p class="text-xl text-gray-400 font-light tracking-wide animate-slide-up" style="animation-delay: 0.1s;">
+        Become Legend
+      </p>
     </div>
 
-    <%= link_to "Get Started", onboarding_split_path, class: "btn-primary text-xl px-8 py-4" %>
+    <div class="bg-steel/50 backdrop-blur-md border border-white/5 rounded-3xl p-8 animate-scale-in" style="animation-delay: 0.2s;">
+      <h2 class="text-2xl font-bold mb-4">Welcome, <span class="text-electric"><%= current_user.username %></span></h2>
+      <p class="text-gray-400 mb-8 leading-relaxed">
+        Your journey to the top begins now. Select a training program to start earning points and ranking up.
+      </p>
+
+      <%= link_to onboarding_split_path, class: "group relative inline-flex items-center justify-center w-full px-8 py-4 text-lg font-bold text-deep-black transition-all duration-200 bg-white font-display rounded-xl focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-white" do %>
+        <span class="absolute inset-0 w-full h-full -mt-1 rounded-lg opacity-30 bg-gradient-to-r from-electric via-neon-lime to-electric"></span>
+        <span class="relative">GET STARTED</span>
+        <svg class="w-5 h-5 ml-2 -mr-1 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+        </svg>
+      <% end %>
+    </div>
+    
+    <div class="mt-8 text-xs text-gray-500 animate-slide-up" style="animation-delay: 0.3s;">
+      <p>EST. 2025 • MATRIX CITY</p>
+    </div>
   </div>
 </div>

@@ -11,4 +11,7 @@ class UsersController < ApplicationController
       completed_exercises: @user.completed_exercises.count
     }
   end
+  def rank
+    @user = current_user
+  end
 end

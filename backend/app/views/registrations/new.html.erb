@@ -1,53 +1,62 @@
-<div class="min-h-screen flex items-center justify-center px-4 py-8">
-  <div class="max-w-md w-full">
-    <div class="text-center mb-8">
-      <h1 class="text-5xl font-bold mb-2 bg-gradient-to-r from-brand-purple to-pink-500 bg-clip-text text-transparent">
-        EloGym
+<div class="min-h-screen flex items-center justify-center px-4 py-8 relative overflow-hidden">
+  <!-- Background Effects -->
+  <div class="absolute inset-0 opacity-10">
+    <div class="absolute top-1/4 right-1/4 w-96 h-96 bg-neon-lime/40 rounded-full blur-3xl animate-pulse"></div>
+    <div class="absolute bottom-1/4 left-1/4 w-96 h-96 bg-electric/30 rounded-full blur-3xl animate-pulse" style="animation-delay: 1.5s;"></div>
+  </div>
+
+  <div class="max-w-md w-full relative z-10">
+    <div class="text-center mb-10 animate-slide-up">
+      <h1 class="heading-xl mb-3">
+        ELOGYM
       </h1>
-      <p class="text-xl text-gray-400">Create your account</p>
+      <div class="h-1 w-24 mx-auto bg-gradient-to-r from-transparent via-neon-lime to-transparent mb-4"></div>
+      <p class="text-lg text-gray-300 uppercase tracking-widest font-bold">Join The Arena</p>
     </div>
 
-    <div class="card">
-      <%= form_with model: @user, url: signup_path, class: "space-y-6" do |f| %>
+    <div class="card animate-scale-in" style="animation-delay: 0.2s;">
+      <div class="diagonal-accent"></div>
+
+      <%= form_with model: @user, url: signup_path, class: "space-y-5" do |f| %>
         <div>
-          <%= f.label :username, "Username", class: "block text-sm font-medium mb-2" %>
+          <%= f.label :username, "Username", class: "block text-sm font-bold uppercase tracking-wider mb-3 text-electric" %>
           <%= f.text_field :username,
             required: true,
             autofocus: true,
             class: "input-field w-full",
-            placeholder: "Choose a username" %>
+            placeholder: "Choose your fighter name" %>
           <% if @user.errors[:username].any? %>
-            <p class="text-red-400 text-sm mt-1"><%= @user.errors[:username].first %></p>
+            <p class="text-energy-orange text-sm mt-2 font-semibold">⚠ <%= @user.errors[:username].first %></p>
           <% end %>
         </div>
 
         <div>
-          <%= f.label :email, "Email", class: "block text-sm font-medium mb-2" %>
+          <%= f.label :email, "Email", class: "block text-sm font-bold uppercase tracking-wider mb-3 text-electric" %>
           <%= f.email_field :email,
             required: true,
             autocomplete: "email",
             class: "input-field w-full",
             placeholder: "your@email.com" %>
           <% if @user.errors[:email].any? %>
-            <p class="text-red-400 text-sm mt-1"><%= @user.errors[:email].first %></p>
+            <p class="text-energy-orange text-sm mt-2 font-semibold">⚠ <%= @user.errors[:email].first %></p>
           <% end %>
         </div>
 
         <div>
-          <%= f.label :password, "Password", class: "block text-sm font-medium mb-2" %>
+          <%= f.label :password, "Password", class: "block text-sm font-bold uppercase tracking-wider mb-3 text-electric" %>
           <%= f.password_field :password,
             required: true,
             autocomplete: "new-password",
             class: "input-field w-full",
             placeholder: "••••••••" %>
-          <p class="text-xs text-gray-400 mt-1">Minimum 6 characters</p>
+          <p class="text-xs text-gray-400 mt-2 uppercase tracking-wider">Minimum 6 characters</p>
           <% if @user.errors[:password].any? %>
-            <p class="text-red-400 text-sm mt-1"><%= @user.errors[:password].first %></p>
+            <p class="text-energy-orange text-sm mt-2 font-semibold">⚠ <%= @user.errors[:password].first %></p>
           <% end %>
         </div>
 
         <div>
-          <%= f.label :password_confirmation, "Confirm Password", class: "block text-sm font-medium mb-2" %>
+          <%= f.label :password_confirmation, "Confirm Password", class: "block text-sm font-bold uppercase tracking-wider mb-3 text-electric" %>
           <%= f.password_field :password_confirmation,
             required: true,
             autocomplete: "new-password",
@@ -55,14 +64,18 @@
             placeholder: "••••••••" %>
         </div>
 
-        <%= f.submit "Create Account", class: "btn-primary w-full text-lg py-3" %>
+        <%= button_tag type: "submit", class: "btn-primary w-full text-lg py-4 mt-6" do %>
+          <span>Begin Journey</span>
+        <% end %>
       <% end %>
     </div>
 
-    <div class="text-center mt-6">
+    <div class="text-center mt-8 animate-slide-in" style="animation-delay: 0.4s;">
       <p class="text-gray-400">
-        Already have an account?
-        <%= link_to "Login", login_path, class: "text-brand-purple hover:text-purple-400 font-semibold transition-colors" %>
+        Already a challenger?
+        <%= link_to login_path, class: "text-neon-lime hover:text-electric font-bold transition-colors uppercase tracking-wider ml-2" do %>
+          Login →
+        <% end %>
       </p>
     </div>
   </div>

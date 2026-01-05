@@ -1,0 +1,20 @@
+<nav class="fixed bottom-0 left-0 right-0 bg-midnight-base border-t border-white/5 z-50 pb-safe">
+  <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between pointer-events-auto">
+    <%# DASHBOARD %>
+    <%= link_to dashboard_path, class: "flex items-center gap-2 group transition-colors #{current_page?(dashboard_path) ? 'text-white' : 'text-text-muted hover:text-white'}" do %>
+      <span class="text-xs font-black tracking-[0.2em] uppercase">Dashboard</span>
+    <% end %>
+
+    <%# MATCHMAKING %>
+    <%= link_to battles_path, class: "flex items-center gap-2 group transition-colors #{current_page?(battles_path) ? 'text-white' : 'text-text-muted hover:text-white'}" do %>
+      <span class="text-xs font-black tracking-[0.2em] uppercase">Matchmaking</span>
+    <% end %>
+
+    <%# RANK %>
+    <%= link_to rank_path, class: "flex items-center gap-2 group transition-colors #{current_page?(rank_path) ? 'text-white' : 'text-text-muted hover:text-white'}" do %>
+      <span class="text-xs font-black tracking-[0.2em] uppercase">Rank</span>
+    <% end %>
+
+    <%# Use a logout button somewhere else or add it here? The screenshot implies these 3 tabs. I'll stick to these 3 tabs. %>
+  </div>
+</nav>

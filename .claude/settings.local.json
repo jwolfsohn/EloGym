@@ -3,7 +3,9 @@
     "allow": [
       "Bash(rails new:*)",
       "Bash(gem install:*)",
-      "Bash(ruby:*)"
+      "Bash(ruby:*)",
+      "Skill(frontend-design)",
+      "Bash(bin/rails assets:precompile:*)"
     ]
   }
 }

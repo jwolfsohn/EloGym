@@ -1,168 +1,49 @@
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-  <h1 class="text-4xl font-bold mb-8">Battle Arena</h1>
-
-  <div class="grid lg:grid-cols-2 gap-8">
-    <!-- Friends List -->
-    <div>
-      <div class="card mb-6">
-        <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
-          <svg class="w-6 h-6 text-brand-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-          </svg>
-          Friends
-        </h2>
-
-        <% if @friends.any? %>
-          <div class="space-y-3">
-            <% @friends.each do |friend| %>
-              <%= render partial: "friends/friend_card", locals: { friend: friend } %>
-            <% end %>
-          </div>
-        <% else %>
-          <p class="text-gray-400 text-center py-8">
-            No friends yet. Search for users below to add friends!
-          </p>
-        <% end %>
-      </div>
-
-      <!-- Search Users -->
-      <div class="card">
-        <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
-          <svg class="w-6 h-6 text-brand-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
-          Find Users
-        </h2>
-
-        <div class="relative">
-          <input
-            type="text"
-            placeholder="Search by username..."
-            class="input-field w-full pl-10"
-            id="user-search"
-          />
-          <svg class="w-5 h-5 text-gray-400 absolute left-3 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-          </svg>
-        </div>
-
-        <div id="search-results" class="mt-4 space-y-2">
-          <!-- Search results will appear here -->
-        </div>
-      </div>
-    </div>
-
-    <!-- Battles Section -->
-    <div>
-      <!-- Pending Battles -->
-      <div class="card mb-6">
-        <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
-          <svg class="w-6 h-6 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          Pending Battles
-        </h2>
-
-        <% if @pending_battles.any? %>
-          <div class="space-y-3">
-            <% @pending_battles.each do |battle| %>
-              <div class="bg-zinc-900 rounded-lg p-4 border border-yellow-600/50">
-                <div class="flex items-center justify-between mb-2">
-                  <div>
-                    <p class="font-semibold">
-                      <%= battle.challenger.username %> vs <%= battle.opponent.username %>
-                    </p>
-                    <p class="text-sm text-gray-400">
-                      <%= battle.created_at.strftime("%B %d, %Y") %>
-                    </p>
-                  </div>
-                  <span class="px-3 py-1 bg-yellow-900/30 text-yellow-500 rounded-full text-sm font-semibold">
-                    Pending
-                  </span>
-                </div>
-              </div>
-            <% end %>
-          </div>
-        <% else %>
-          <p class="text-gray-400 text-center py-8">
-            No pending battles
-          </p>
-        <% end %>
-      </div>
-
-      <!-- Recent Battles -->
-      <div class="card">
-        <h2 class="text-2xl font-bold mb-4 flex items-center gap-2">
-          <svg class="w-6 h-6 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          Recent Battles
-        </h2>
-
-        <% if @completed_battles.any? %>
-          <div class="space-y-3">
-            <% @completed_battles.each do |battle| %>
-              <div class="bg-zinc-900 rounded-lg p-4 border border-zinc-700">
-                <div class="flex items-center justify-between mb-2">
-                  <div>
-                    <p class="font-semibold">
-                      <span class="<%= battle.winner_id == battle.challenger_id ? 'text-green-400' : '' %>">
-                        <%= battle.challenger.username %>
-                      </span>
-                      vs
-                      <span class="<%= battle.winner_id == battle.opponent_id ? 'text-green-400' : '' %>">
-                        <%= battle.opponent.username %>
-                      </span>
-                    </p>
-                    <p class="text-sm text-gray-400">
-                      Winner: <span class="text-brand-purple"><%= battle.winner.username %></span>
-                    </p>
-                  </div>
-                  <div class="text-right text-sm">
-                    <p class="text-green-400">+<%= battle.points_gained %> pts</p>
-                    <p class="text-red-400">-<%= battle.points_lost %> pts</p>
-                  </div>
-                </div>
-              </div>
-            <% end %>
-          </div>
-        <% else %>
-          <p class="text-gray-400 text-center py-8">
-            No completed battles yet
-          </p>
-        <% end %>
-      </div>
-    </div>
+<div class="max-w-4xl mx-auto px-4 pt-8 pb-32">
+  <div class="flex items-center justify-between mb-8 relative">
+    <h1 class="text-4xl font-display text-electric text-center tracking-wider uppercase w-full">Matchmaking</h1>
+    <%= link_to "PROFILE", "#", class: "absolute right-0 top-1 btn-primary bg-midnight-card border border-white/20 px-4 py-1.5 rounded text-xs font-black tracking-widest uppercase text-white hover:bg-white/5 transition-colors" %>
   </div>
 
-  <!-- Challenge Modal -->
-  <div
-    data-controller="modal"
-    data-modal-target="container"
-    class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-50 items-center justify-center"
-    data-action="click->modal#closeBackground"
-    id="challenge-modal"
-  >
-    <div class="card max-w-md w-full mx-4">
-      <div class="flex items-center justify-between mb-4">
-        <h3 class="text-2xl font-bold">Challenge Friend</h3>
-        <button data-action="click->modal#close" class="text-gray-400 hover:text-white">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-          </svg>
-        </button>
+  <div class="bg-midnight-card border border-white/5 rounded-lg p-6 mb-8">
+    <h2 class="text-2xl font-display text-electric mb-4 tracking-wide uppercase">Find Users</h2>
+    
+    <%= form_with url: battles_path, method: :get, class: "flex gap-4", local: true do |f| %>
+      <%= f.text_field :query, placeholder: "Search by username", class: "flex-1 bg-midnight-base border border-white/10 rounded px-4 py-2 text-white placeholder-gray-500 focus:border-electric focus:ring-0" %>
+      <%= f.submit "SEARCH", name: nil, class: "btn-primary bg-electric text-black px-8 py-2 rounded text-sm font-black tracking-widest uppercase hover:bg-electric/90 transition-colors cursor-pointer" %>
+    <% end %>
+  </div>
+
+  <div class="bg-midnight-card border border-white/5 rounded-lg p-6 mb-8">
+    <h2 class="text-2xl font-display text-electric mb-4 tracking-wide uppercase">Your Friends</h2>
+    
+    <% if @friends.any? %>
+      <div class="space-y-2">
+        <% @friends.each do |friend| %>
+          <div class="flex items-center justify-between bg-midnight-base p-3 rounded border border-white/5">
+            <div class="flex items-center gap-3">
+              <span class="font-bold text-white"><%= friend.username %></span>
+              <span class="text-neon-lime font-display text-xl"><%= friend.rank %></span>
+            </div>
+            <button class="bg-electric text-black px-6 py-1.5 rounded text-xs font-black tracking-widest uppercase hover:bg-electric/90 transition-colors">
+              BATTLE
+            </button>
+          </div>
+        <% end %>
       </div>
-      <p class="text-gray-400 mb-6">
-        Send a battle challenge to <span class="text-brand-purple font-semibold" id="challenge-username"></span>?
-      </p>
-      <div class="flex gap-3">
-        <button data-action="click->modal#close" class="btn-secondary flex-1">
-          Cancel
-        </button>
-        <button id="confirm-challenge" class="btn-primary flex-1">
-          Send Challenge
-        </button>
-      </div>
-    </div>
+    <% else %>
+      <p class="text-gray-500 text-sm">No friends added yet.</p>
+    <% end %>
+  </div>
+
+  <div class="flex items-center justify-between mb-4">
+    <h2 class="text-2xl font-display text-electric tracking-wide uppercase">Pending Battles</h2>
+    <button class="bg-electric text-black px-6 py-2 rounded text-xs font-black tracking-widest uppercase hover:bg-electric/90 transition-colors">
+      Battle History
+    </button>
+  </div>
+  
+  <%# Pending Battles List Placeholder %>
+  <div class="bg-midnight-card border border-white/5 rounded-lg p-6 min-h-[100px] flex items-center justify-center">
+    <p class="text-gray-500 text-sm">No pending battles.</p>
   </div>
 </div>

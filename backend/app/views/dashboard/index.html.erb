@@ -1,65 +1,69 @@
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-  <!-- Stats Header -->
-  <div class="card mb-8">
-    <div class="flex items-center justify-between">
-      <div>
-        <h2 class="text-3xl font-bold mb-2">Welcome, <%= @user.username %>!</h2>
-        <div class="flex items-center gap-4">
-          <div class="flex items-center gap-2">
-            <span class="text-gray-400">Rank:</span>
-            <span class="rank-badge rank-<%= @user.rank %> text-2xl"><%= @user.rank %></span>
-          </div>
-          <div>
-            <span class="text-gray-400">Points:</span>
-            <span class="text-2xl font-bold text-brand-purple"><%= @user.total_points %></span>
-          </div>
-        </div>
-      </div>
+<div class="max-w-4xl mx-auto px-4 pt-8 pb-32">
+  <h1 class="text-4xl font-display text-electric text-center tracking-wider mb-8 uppercase">Dashboard</h1>
+
+  <%# Date Navigation Card %>
+  <div class="bg-midnight-card rounded-lg p-6 mb-8 border border-white/5">
+    <div class="flex items-center gap-2 mb-6">
+      <input type="checkbox" id="demo_mode" class="rounded border-white/20 bg-midnight-base text-electric focus:ring-offset-0 focus:ring-0">
+      <label for="demo_mode" class="text-sm font-medium text-gray-400">Demo Mode</label>
+    </div>
+
+    <div class="flex items-center justify-between gap-4">
+      <%= link_to dashboard_path(date: @date - 1.day), class: "btn-primary w-32 py-2 text-xs font-black tracking-widest uppercase text-center rounded bg-electric text-black hover:bg-electric/90" do %>
+        Previous Day
+      <% end %>
+
+      <span class="text-sm font-medium text-gray-300 min-w-[200px] text-center">
+        <%= @date.strftime("%A, %B %d") %>
+      </span>
+
+      <%= link_to dashboard_path(date: @date + 1.day), class: "btn-primary w-32 py-2 text-xs font-black tracking-widest uppercase text-center rounded bg-electric text-black hover:bg-electric/90" do %>
+        Next Day
+      <% end %>
     </div>
   </div>
 
-  <!-- Date Navigator -->
-  <turbo-frame id="workout-frame">
-    <div class="card mb-8">
-      <div class="flex items-center justify-between">
-        <%= link_to dashboard_path(date: @date - 1.day), class: "btn-secondary" do %>
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-          </svg>
-        <% end %>
-
-        <div class="text-center">
-          <h3 class="text-xl font-semibold"><%= @date.strftime("%A, %B %d") %></h3>
-          <% if @training_day %>
-            <p class="text-brand-purple"><%= @training_day.day_name %> Day</p>
-          <% else %>
-            <p class="text-yellow-500">No training split assigned</p>
-          <% end %>
-        </div>
-
-        <%= link_to dashboard_path(date: @date + 1.day), class: "btn-secondary" do %>
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-          </svg>
-        <% end %>
-      </div>
+  <%# Header Info %>
+  <div class="flex items-center justify-between mb-8">
+    <div>
+      <h2 class="text-2xl font-bold mb-2">
+        Today's Split: <span class="text-white"><%= @training_day ? @training_day.split.name : "Rest Day" %></span>
+      </h2>
+      <p class="text-gray-400">Total Points: <%= @user.total_points %></p>
     </div>
+    
+    <% if @training_day %>
+      <button class="btn-primary bg-electric text-black px-6 py-2 rounded text-xs font-black tracking-widest uppercase hover:bg-electric/90 transition-colors">
+        Starting Stats
+      </button>
+    <% end %>
+  </div>
 
-    <!-- Workout List -->
-    <div class="space-y-4">
-      <% if @exercises.any? %>
-        <h3 class="text-2xl font-bold mb-4">Today's Exercises</h3>
-        <% @exercises.each do |exercise| %>
-          <%= render partial: "exercises/exercise_card", locals: { exercise: exercise, user: @user, completed: @completed_today.include?(exercise.id), date: @date } %>
-        <% end %>
-      <% else %>
-        <div class="card text-center py-12">
-          <p class="text-xl text-gray-400 mb-4">No exercises for today</p>
-          <% unless @user.training_splits.any? %>
-            <%= link_to "Set Up Training Split", onboarding_split_path, class: "btn-primary" %>
-          <% end %>
+  <%# Exercises Grid %>
+  <% if @exercises.any? %>
+    <div class="grid md:grid-cols-2 gap-4">
+      <% @exercises.each do |exercise| %>
+        <div class="bg-midnight-card border border-white/10 rounded-lg p-6 relative group">
+          <div class="flex items-start justify-between mb-4">
+            <h3 class="font-display text-xl tracking-wide uppercase max-w-[70%] leading-tight">
+              <%= exercise.name %>
+            </h3>
+            <button class="bg-electric text-black px-4 py-1.5 rounded text-[10px] font-black tracking-widest uppercase hover:bg-electric/90 transition-colors">
+              Completed
+            </button>
+          </div>
+
+          <div class="space-y-1">
+            <p class="text-gray-400 text-sm">3 sets × 8 reps</p> <%# Placeholder data matching screenshot %>
+            <p class="text-gray-400 text-sm">Weight: 35 lbs</p>
+          </div>
         </div>
       <% end %>
     </div>
-  </turbo-frame>
+  <% else %>
+    <div class="bg-midnight-card border border-white/10 rounded-lg p-12 text-center">
+      <p class="text-gray-400 mb-4">No exercises scheduled for this day.</p>
+      <%= link_to "View User Split", onboarding_split_path, class: "text-electric text-sm font-bold uppercase tracking-wider hover:underline" %>
+    </div>
+  <% end %>
 </div>

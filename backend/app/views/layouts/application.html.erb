@@ -18,11 +18,29 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
+    <%# Google Fonts %>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:opsz,wght@9..40..100..1000&display=swap" rel="stylesheet">
+
+
     <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
   </head>
 
-  <body>
-    <%= yield %>
+  <body class="bg-midnight-base text-text-base font-sans antialiased min-h-screen pb-24">
+    <div class="min-h-screen relative">
+      <div class="absolute top-0 right-0 p-6 z-50">
+        <%= link_to "PROFILE", "#", class: "btn-primary bg-transparent border border-white/10 px-4 py-2 rounded text-xs font-black tracking-widest hover:bg-white/5 transition-colors uppercase text-electric" %>
+      </div>
+
+      <main class="w-full">
+        <%= yield %>
+      </main>
+
+      <% if current_user %>
+        <%= render "layouts/bottom_nav" %>
+      <% end %>
+    </div>
   </body>
 </html>

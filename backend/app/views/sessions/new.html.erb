@@ -1,16 +1,25 @@
-<div class="min-h-screen flex items-center justify-center px-4">
-  <div class="max-w-md w-full">
-    <div class="text-center mb-8">
-      <h1 class="text-5xl font-bold mb-2 bg-gradient-to-r from-brand-purple to-pink-500 bg-clip-text text-transparent">
-        EloGym
+<div class="min-h-screen flex items-center justify-center px-4 relative overflow-hidden">
+  <!-- Background Effects -->
+  <div class="absolute inset-0 opacity-10">
+    <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-electric/40 rounded-full blur-3xl animate-pulse"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-energy-orange/30 rounded-full blur-3xl animate-pulse" style="animation-delay: 1.5s;"></div>
+  </div>
+
+  <div class="max-w-md w-full relative z-10">
+    <div class="text-center mb-10 animate-slide-up">
+      <h1 class="heading-xl mb-3">
+        ELOGYM
       </h1>
-      <p class="text-xl text-gray-400">Login to your account</p>
+      <div class="h-1 w-24 mx-auto bg-gradient-to-r from-transparent via-electric to-transparent mb-4"></div>
+      <p class="text-lg text-gray-300 uppercase tracking-widest font-bold">Access Your Rank</p>
     </div>
 
-    <div class="card">
+    <div class="card animate-scale-in" style="animation-delay: 0.2s;">
+      <div class="diagonal-accent"></div>
+
       <%= form_with url: login_path, method: :post, class: "space-y-6" do |f| %>
         <div>
-          <%= f.label :email, "Email", class: "block text-sm font-medium mb-2" %>
+          <%= f.label :email, "Email", class: "block text-sm font-bold uppercase tracking-wider mb-3 text-electric" %>
           <%= f.email_field :email,
             required: true,
             autofocus: true,
@@ -20,7 +29,7 @@
         </div>
 
         <div>
-          <%= f.label :password, "Password", class: "block text-sm font-medium mb-2" %>
+          <%= f.label :password, "Password", class: "block text-sm font-bold uppercase tracking-wider mb-3 text-electric" %>
           <%= f.password_field :password,
             required: true,
             autocomplete: "current-password",
@@ -28,22 +37,33 @@
             placeholder: "••••••••" %>
         </div>
 
-        <%= f.submit "Login", class: "btn-primary w-full text-lg py-3" %>
+        <%= button_tag type: "submit", class: "btn-primary w-full text-lg py-4" do %>
+          <span>Enter Arena</span>
+        <% end %>
       <% end %>
     </div>
 
-    <div class="text-center mt-6">
+    <div class="text-center mt-8 animate-slide-in" style="animation-delay: 0.4s;">
       <p class="text-gray-400">
-        Don't have an account?
-        <%= link_to "Sign up", signup_path, class: "text-brand-purple hover:text-purple-400 font-semibold transition-colors" %>
+        New challenger?
+        <%= link_to signup_path, class: "text-electric hover:text-neon-lime font-bold transition-colors uppercase tracking-wider ml-2" do %>
+          Sign Up →
+        <% end %>
       </p>
     </div>
 
     <!-- Demo credentials -->
-    <div class="card-glass mt-6">
-      <p class="text-sm font-semibold text-brand-purple mb-2">Demo Account:</p>
-      <p class="text-sm text-gray-400">Email: demo@elogym.com</p>
-      <p class="text-sm text-gray-400">Password: password123</p>
+    <div class="card-glass mt-8 animate-slide-in" style="animation-delay: 0.6s;">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-8 h-8 bg-neon-lime/20 flex items-center justify-center" style="clip-path: polygon(20% 0%, 100% 0, 100% 80%, 80% 100%, 0 100%, 0% 20%);">
+          <span class="text-lg">🎮</span>
+        </div>
+        <p class="text-sm font-bold text-neon-lime uppercase tracking-wider">Demo Access</p>
+      </div>
+      <div class="space-y-1 text-sm text-gray-400 font-mono">
+        <p><span class="text-gray-500">Email:</span> demo@elogym.com</p>
+        <p><span class="text-gray-500">Pass:</span> password123</p>
+      </div>
     </div>
   </div>
 </div>

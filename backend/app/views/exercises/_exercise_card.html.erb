@@ -1,37 +1,91 @@
-<div class="card <%= 'opacity-50' if completed %>" id="exercise-<%= exercise.id %>" data-controller="confetti">
-  <div class="flex items-start justify-between">
-    <div class="flex-1">
-      <h4 class="text-xl font-semibold mb-2"><%= exercise.name %></h4>
+<div class="<%= completed ? 'card opacity-60 grayscale' : 'card-highlight' %>
+     group hover:scale-[1.02] transition-all duration-300 relative overflow-hidden"
+     id="exercise-<%= exercise.id %>"
+     data-controller="confetti">
 
-      <div class="space-y-1 text-gray-400">
-        <p>
-          <span class="font-medium">Muscle Group:</span>
-          <%= exercise.muscle_group %>
-        </p>
-        <p>
-          <span class="font-medium">Equipment:</span>
-          <%= exercise.equipment %>
-        </p>
-        <p class="text-brand-purple font-semibold text-lg mt-3">
-          Target: 3 Sets × 5 Reps @ <%= exercise.target_weight_for_user(user) %> lbs
-        </p>
+  <!-- Completion Overlay -->
+  <% if completed %>
+    <div class="absolute inset-0 bg-neon-lime/5 backdrop-blur-sm flex items-center justify-center z-10 pointer-events-none">
+      <div class="text-center">
+        <div class="w-20 h-20 mx-auto mb-4 bg-neon-lime/20 rounded-full flex items-center justify-center animate-pulse">
+          <svg class="w-12 h-12 text-neon-lime" fill="currentColor" viewBox="0 0 20 20">
+            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <p class="font-display text-2xl uppercase tracking-wider text-neon-lime glow-text">Crushed!</p>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="diagonal-accent"></div>
+
+  <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+    <!-- Exercise Info -->
+    <div class="flex-1">
+      <div class="flex items-start gap-4 mb-4">
+        <!-- Exercise Icon -->
+        <div class="flex-shrink-0 w-14 h-14 bg-electric/20 flex items-center justify-center"
+             style="clip-path: polygon(20% 0%, 100% 0, 100% 80%, 80% 100%, 0 100%, 0% 20%);">
+          <span class="text-2xl">🏋️</span>
+        </div>
+
+        <div class="flex-1">
+          <h4 class="heading-md text-white mb-2"><%= exercise.name %></h4>
+
+          <div class="flex flex-wrap gap-3 text-sm">
+            <div class="flex items-center gap-2">
+              <div class="w-2 h-2 bg-electric" style="clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);"></div>
+              <span class="text-gray-400 uppercase tracking-wider">
+                <%= exercise.muscle_group %>
+              </span>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <div class="w-2 h-2 bg-neon-lime" style="clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);"></div>
+              <span class="text-gray-400 uppercase tracking-wider">
+                <%= exercise.equipment %>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Target Stats - Bold Display -->
+      <div class="bg-midnight/60 p-4 border-l-4 border-electric">
+        <div class="grid grid-cols-3 gap-4 text-center">
+          <div>
+            <p class="text-xs uppercase tracking-widest text-gray-400 mb-1">Sets</p>
+            <p class="font-display text-3xl text-electric">3</p>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-widest text-gray-400 mb-1">Reps</p>
+            <p class="font-display text-3xl text-neon-lime">5</p>
+          </div>
+          <div>
+            <p class="text-xs uppercase tracking-widest text-gray-400 mb-1">Weight</p>
+            <p class="font-display text-3xl text-energy-orange"><%= exercise.target_weight_for_user(user) %></p>
+          </div>
+        </div>
+        <p class="text-xs text-gray-500 text-center mt-2 uppercase tracking-wider">Target Load: <%= exercise.target_weight_for_user(user) %> lbs</p>
       </div>
     </div>
 
-    <div>
+    <!-- Action Button -->
+    <div class="flex-shrink-0 md:ml-6">
       <% if completed %>
-        <div class="flex items-center gap-2 text-green-400">
-          <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
-          </svg>
-          <span class="font-semibold">Completed!</span>
+        <div class="text-center px-6">
+          <div class="w-16 h-16 mx-auto mb-3 bg-neon-lime/20 rounded-full flex items-center justify-center">
+            <svg class="w-10 h-10 text-neon-lime" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+            </svg>
+          </div>
+          <p class="font-bold uppercase tracking-wider text-sm text-neon-lime">Done</p>
         </div>
       <% else %>
-        <%= button_to "Complete",
-          api_users_complete_exercise_path,
+        <%= button_to api_users_complete_exercise_path,
           params: { exercise_id: exercise.id },
           method: :post,
-          class: "btn-primary",
+          class: "btn-primary text-lg px-8 py-4 transform hover:scale-105 active:scale-95 transition-transform",
           data: {
             turbo_method: :post,
             action: "click->confetti#fire"
@@ -40,7 +94,9 @@
             data: {
               turbo_frame: "_top"
             }
-          } %>
+          } do %>
+          <span>Complete</span>
+        <% end %>
       <% end %>
     </div>
   </div>
