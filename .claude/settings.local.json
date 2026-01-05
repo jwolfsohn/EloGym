@@ -7,7 +7,9 @@
       "Skill(frontend-design)",
       "Bash(bin/rails assets:precompile:*)",
       "Bash(bin/rails runner:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(bin/rails generate migration:*)",
+      "Bash(bin/rails db:migrate:*)"
     ]
   }
 }

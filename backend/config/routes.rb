@@ -27,7 +27,12 @@ Rails.application.routes.draw do
   get "onboarding/stats", to: "onboarding#stats"
   post "onboarding/save_stats", to: "onboarding#save_stats"
 
-  resources :battles, only: [:index]
+  resources :battles, only: [:index, :new, :create, :show] do
+    member do
+      get :respond
+      post :submit_response
+    end
+  end
   resources :users, only: [:show]
   resources :friends, only: [:create, :destroy]
   post "exercises/:id/complete", to: "exercises#complete", as: :complete_exercise

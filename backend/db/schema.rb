@@ -10,11 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_01_01_000009) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_05_054406) do
   create_table "battles", force: :cascade do |t|
+    t.decimal "challenger_bench_press"
+    t.decimal "challenger_deadlift"
     t.integer "challenger_id", null: false
+    t.integer "challenger_pushups"
     t.datetime "created_at", null: false
+    t.decimal "opponent_bench_press"
+    t.decimal "opponent_deadlift"
     t.integer "opponent_id", null: false
+    t.integer "opponent_pushups"
     t.integer "points_gained", default: 0
     t.integer "points_lost", default: 0
     t.string "status", default: "pending", null: false

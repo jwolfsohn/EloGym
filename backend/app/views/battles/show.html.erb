@@ -1,0 +1,132 @@
+<div class="max-w-4xl mx-auto px-4 pt-8 pb-32">
+  <div class="mb-8">
+    <%= link_to "← Back to Matchmaking", battles_path, class: "text-electric hover:text-neon-lime transition-colors text-sm font-bold uppercase tracking-wider" %>
+  </div>
+
+  <div class="text-center mb-8">
+    <h1 class="text-4xl font-display text-electric uppercase tracking-wider mb-4">Battle Results</h1>
+    
+    <% if @battle.status == "completed" %>
+      <% if @battle.winner %>
+        <% if @battle.winner == current_user %>
+          <div class="bg-neon-lime/10 border border-neon-lime rounded-lg p-6 mb-6">
+            <p class="text-neon-lime font-display text-5xl mb-2">VICTORY!</p>
+            <p class="text-white text-xl">You defeated <span class="font-bold text-black"><%= @battle.winner == @battle.challenger ? @battle.opponent.username : @battle.challenger.username %></span></p>
+            <p class="text-electric font-bold text-2xl mt-2">+<%= @battle.points_gained %> points</p>
+          </div>
+        <% else %>
+          <div class="bg-energy-orange/10 border border-energy-orange rounded-lg p-6 mb-6">
+            <p class="text-energy-orange font-display text-5xl mb-2">DEFEAT</p>
+            <p class="text-white text-xl"><span class="font-bold text-black"><%= @battle.winner.username %></span> was stronger this time</p>
+            <p class="text-energy-orange font-bold text-2xl mt-2">-<%= @battle.points_lost %> points</p>
+          </div>
+        <% end %>
+      <% else %>
+        <div class="bg-gray-700/20 border border-gray-500 rounded-lg p-6 mb-6">
+          <p class="text-gray-400 font-display text-5xl mb-2">DRAW</p>
+          <p class="text-white text-xl">Both fighters showed equal strength</p>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-6 mb-8">
+    <!-- Challenger Stats -->
+    <div class="bg-midnight-card border-2 <%= @battle.winner == @battle.challenger ? 'border-neon-lime' : 'border-white/10' %> rounded-lg p-6">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-2xl font-display text-black uppercase tracking-wide font-bold"><%= @battle.challenger.username %></h2>
+        <span class="rank-badge rank-<%= @battle.challenger.rank %>"><%= @battle.challenger.rank %></span>
+      </div>
+
+      <div class="space-y-4">
+        <div class="bg-midnight-base rounded p-4">
+          <p class="text-gray-400 text-sm uppercase tracking-wider mb-2">Bench Press</p>
+          <p class="font-display text-3xl font-bold text-black"><%= @battle.challenger_bench_press %> <span class="text-lg text-gray-400">lbs</span></p>
+          <% if @battle.challenger_bench_press > @battle.opponent_bench_press %>
+            <span class="text-neon-lime text-xs font-bold">✓ WON</span>
+          <% elsif @battle.challenger_bench_press < @battle.opponent_bench_press %>
+            <span class="text-energy-orange text-xs font-bold">✗ LOST</span>
+          <% else %>
+            <span class="text-gray-400 text-xs font-bold">= TIED</span>
+          <% end %>
+        </div>
+
+        <div class="bg-midnight-base rounded p-4">
+          <p class="text-gray-400 text-sm uppercase tracking-wider mb-2">Deadlift</p>
+          <p class="font-display text-3xl font-bold text-black"><%= @battle.challenger_deadlift %> <span class="text-lg text-gray-400">lbs</span></p>
+          <% if @battle.challenger_deadlift > @battle.opponent_deadlift %>
+            <span class="text-neon-lime text-xs font-bold">✓ WON</span>
+          <% elsif @battle.challenger_deadlift < @battle.opponent_deadlift %>
+            <span class="text-energy-orange text-xs font-bold">✗ LOST</span>
+          <% else %>
+            <span class="text-gray-400 text-xs font-bold">= TIED</span>
+          <% end %>
+        </div>
+
+        <div class="bg-midnight-base rounded p-4">
+          <p class="text-gray-400 text-sm uppercase tracking-wider mb-2">Pushups</p>
+          <p class="font-display text-3xl font-bold text-black"><%= @battle.challenger_pushups %> <span class="text-lg text-gray-400">reps</span></p>
+          <% if @battle.challenger_pushups > @battle.opponent_pushups %>
+            <span class="text-neon-lime text-xs font-bold">✓ WON</span>
+          <% elsif @battle.challenger_pushups < @battle.opponent_pushups %>
+            <span class="text-energy-orange text-xs font-bold">✗ LOST</span>
+          <% else %>
+            <span class="text-gray-400 text-xs font-bold">= TIED</span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Opponent Stats -->
+    <div class="bg-midnight-card border-2 <%= @battle.winner == @battle.opponent ? 'border-neon-lime' : 'border-white/10' %> rounded-lg p-6">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-2xl font-display text-black uppercase tracking-wide font-bold"><%= @battle.opponent.username %></h2>
+        <span class="rank-badge rank-<%= @battle.opponent.rank %>"><%= @battle.opponent.rank %></span>
+      </div>
+
+      <div class="space-y-4">
+        <div class="bg-midnight-base rounded p-4">
+          <p class="text-gray-400 text-sm uppercase tracking-wider mb-2">Bench Press</p>
+          <p class="font-display text-3xl font-bold text-black"><%= @battle.opponent_bench_press %> <span class="text-lg text-gray-400">lbs</span></p>
+          <% if @battle.opponent_bench_press > @battle.challenger_bench_press %>
+            <span class="text-neon-lime text-xs font-bold">✓ WON</span>
+          <% elsif @battle.opponent_bench_press < @battle.challenger_bench_press %>
+            <span class="text-energy-orange text-xs font-bold">✗ LOST</span>
+          <% else %>
+            <span class="text-gray-400 text-xs font-bold">= TIED</span>
+          <% end %>
+        </div>
+
+        <div class="bg-midnight-base rounded p-4">
+          <p class="text-gray-400 text-sm uppercase tracking-wider mb-2">Deadlift</p>
+          <p class="font-display text-3xl font-bold text-black"><%= @battle.opponent_deadlift %> <span class="text-lg text-gray-400">lbs</span></p>
+          <% if @battle.opponent_deadlift > @battle.challenger_deadlift %>
+            <span class="text-neon-lime text-xs font-bold">✓ WON</span>
+          <% elsif @battle.opponent_deadlift < @battle.challenger_deadlift %>
+            <span class="text-energy-orange text-xs font-bold">✗ LOST</span>
+          <% else %>
+            <span class="text-gray-400 text-xs font-bold">= TIED</span>
+          <% end %>
+        </div>
+
+        <div class="bg-midnight-base rounded p-4">
+          <p class="text-gray-400 text-sm uppercase tracking-wider mb-2">Pushups</p>
+          <p class="font-display text-3xl font-bold text-black"><%= @battle.opponent_pushups %> <span class="text-lg text-gray-400">reps</span></p>
+          <% if @battle.opponent_pushups > @battle.challenger_pushups %>
+            <span class="text-neon-lime text-xs font-bold">✓ WON</span>
+          <% elsif @battle.opponent_pushups < @battle.challenger_pushups %>
+            <span class="text-energy-orange text-xs font-bold">✗ LOST</span>
+          <% else %>
+            <span class="text-gray-400 text-xs font-bold">= TIED</span>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center">
+    <%= link_to battles_path, class: "btn-primary px-12 py-3" do %>
+      <span>Continue</span>
+    <% end %>
+  </div>
+</div>
