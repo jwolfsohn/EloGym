@@ -24,7 +24,7 @@
 
       <% if current_user.id == @user.id %>
         <div class="flex-shrink-0">
-          <%= link_to "Logout", logout_path, data: { turbo_method: :delete }, class: "btn-secondary" %>
+          <%= button_to "Logout", logout_path, method: :delete, class: "btn-secondary" %>
         </div>
       <% end %>
     </div>

@@ -31,7 +31,9 @@
   <body class="bg-midnight-base text-text-base font-sans antialiased min-h-screen pb-24">
     <div class="min-h-screen relative">
       <div class="absolute top-0 right-0 p-6 z-50">
-        <%= link_to "PROFILE", "#", class: "btn-primary bg-transparent border border-white/10 px-4 py-2 rounded text-xs font-black tracking-widest hover:bg-white/5 transition-colors uppercase text-electric" %>
+        <% if current_user %>
+          <%= link_to "PROFILE", user_path(current_user), class: "btn-primary bg-transparent border border-white/10 px-4 py-2 rounded text-xs font-black tracking-widest hover:bg-white/5 transition-colors uppercase text-electric" %>
+        <% end %>
       </div>
 
       <main class="w-full">

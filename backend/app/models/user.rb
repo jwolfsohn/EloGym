@@ -61,8 +61,9 @@ class User < ApplicationRecord
     return days.first if days.empty?
 
     # Count completed exercises to determine rotation
+    # Assuming 3 exercises per workout day
     completed_count = completed_exercises.count
-    day_index = completed_count % days.count
+    day_index = (completed_count / 3) % days.count
     days[day_index]
   end
 

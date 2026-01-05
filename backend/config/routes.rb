@@ -28,5 +28,8 @@ Rails.application.routes.draw do
   post "onboarding/save_stats", to: "onboarding#save_stats"
 
   resources :battles, only: [:index]
+  resources :users, only: [:show]
+  resources :friends, only: [:create, :destroy]
+  post "exercises/:id/complete", to: "exercises#complete", as: :complete_exercise
   get "rank", to: "users#rank"
 end

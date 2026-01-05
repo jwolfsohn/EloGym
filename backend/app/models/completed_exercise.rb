@@ -4,7 +4,7 @@ class CompletedExercise < ApplicationRecord
 
   validates :completed_at, presence: true
 
-  after_create :award_points
+  # after_create :award_points
 
   private
 

@@ -1,11 +1,11 @@
 <div class="max-w-4xl mx-auto px-4 pt-8 pb-32">
   <div class="flex items-center justify-between mb-8 relative">
     <h1 class="text-4xl font-display text-electric text-center tracking-wider uppercase w-full">Rank</h1>
-    <%= link_to "PROFILE", "#", class: "absolute right-0 top-1 btn-primary bg-midnight-card border border-white/20 px-4 py-1.5 rounded text-xs font-black tracking-widest uppercase text-white hover:bg-white/5 transition-colors" %>
+    <%= link_to "PROFILE", user_path(current_user), class: "absolute right-0 top-1 btn-primary bg-gray-900 border border-white/20 px-4 py-1.5 rounded text-xs font-black tracking-widest uppercase text-white hover:bg-white/5 transition-colors" %>
   </div>
 
   <div class="flex justify-center mb-12">
-    <div class="bg-midnight-card border border-white/5 rounded-xl p-8 w-64 text-center shadow-2xl shadow-black/50">
+    <div class="bg-gray-900 border border-white/5 rounded-xl p-8 w-64 text-center shadow-2xl shadow-black/50">
       <p class="text-white text-lg font-medium mb-2">Current Rank <span class="text-neon-lime text-4xl font-display ml-2"><%= @user.rank %></span></p>
       
       <div class="h-px bg-white/10 w-full my-4"></div>
@@ -15,7 +15,7 @@
     </div>
   </div>
 
-  <div class="bg-midnight-card border border-white/5 rounded-xl p-8 max-w-md mx-auto relative overflow-hidden">
+  <div class="bg-gray-900 border border-white/5 rounded-xl p-8 max-w-md mx-auto relative overflow-hidden">
     <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-electric to-transparent opacity-50"></div>
     
     <h2 class="text-xl font-display text-electric tracking-widest uppercase text-center mb-8">Rank Requirements</h2>

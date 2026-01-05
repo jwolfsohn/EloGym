@@ -6,10 +6,36 @@
 
   <div class="bg-midnight-card border border-white/5 rounded-lg p-6 mb-8">
     <h2 class="text-2xl font-display text-electric mb-4 tracking-wide uppercase">Find Users</h2>
-    
-    <%= form_with url: battles_path, method: :get, class: "flex gap-4", local: true do |f| %>
-      <%= f.text_field :query, placeholder: "Search by username", class: "flex-1 bg-midnight-base border border-white/10 rounded px-4 py-2 text-white placeholder-gray-500 focus:border-electric focus:ring-0" %>
+
+    <%= form_with url: battles_path, method: :get, class: "flex gap-4 mb-4", local: true do |f| %>
+      <%= f.text_field :query, placeholder: "Search by username", value: params[:query], class: "flex-1 bg-gray-900 border border-electric/30 rounded px-4 py-2 text-black font-bold placeholder-gray-600 focus:border-electric focus:ring-0" %>
       <%= f.submit "SEARCH", name: nil, class: "btn-primary bg-electric text-black px-8 py-2 rounded text-sm font-black tracking-widest uppercase hover:bg-electric/90 transition-colors cursor-pointer" %>
+    <% end %>
+
+    <% if params[:query].present? %>
+      <div class="mt-4">
+        <h3 class="text-sm font-bold text-gray-400 uppercase tracking-wider mb-2">Search Results</h3>
+        <% if @search_results.any? %>
+          <div class="space-y-2">
+            <% @search_results.each do |user| %>
+              <div class="flex items-center justify-between bg-midnight-base p-3 rounded border border-white/5">
+                <div class="flex items-center gap-3">
+                  <span class="font-bold text-black"><%= user.username %></span>
+                  <span class="text-neon-lime font-display text-xl"><%= user.rank %></span>
+                  <span class="text-gray-400 text-sm"><%= user.total_points %> pts</span>
+                </div>
+                <% if @friends.include?(user) %>
+                  <span class="bg-gray-700 text-gray-400 px-6 py-1.5 rounded text-xs font-black tracking-widest uppercase">FRIENDS</span>
+                <% else %>
+                  <%= button_to "ADD FRIEND", friends_path(friend_id: user.id), method: :post, class: "bg-neon-lime text-black px-6 py-1.5 rounded text-xs font-black tracking-widest uppercase hover:bg-neon-lime/90 transition-colors" %>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+        <% else %>
+          <p class="text-gray-500 text-sm">No users found matching "<%= params[:query] %>"</p>
+        <% end %>
+      </div>
     <% end %>
   </div>
 
@@ -21,7 +47,7 @@
         <% @friends.each do |friend| %>
           <div class="flex items-center justify-between bg-midnight-base p-3 rounded border border-white/5">
             <div class="flex items-center gap-3">
-              <span class="font-bold text-white"><%= friend.username %></span>
+              <span class="font-bold text-black"><%= friend.username %></span>
               <span class="text-neon-lime font-display text-xl"><%= friend.rank %></span>
             </div>
             <button class="bg-electric text-black px-6 py-1.5 rounded text-xs font-black tracking-widest uppercase hover:bg-electric/90 transition-colors">

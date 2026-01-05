@@ -48,9 +48,13 @@
             <h3 class="font-display text-xl tracking-wide uppercase max-w-[70%] leading-tight">
               <%= exercise.name %>
             </h3>
-            <button class="bg-electric text-black px-4 py-1.5 rounded text-[10px] font-black tracking-widest uppercase hover:bg-electric/90 transition-colors">
-              Completed
-            </button>
+            <% if @completed_today.include?(exercise.id) %>
+              <button class="bg-gray-800 text-gray-500 px-4 py-1.5 rounded text-[10px] font-black tracking-widest uppercase cursor-not-allowed">
+                Completed
+              </button>
+            <% else %>
+              <%= button_to "Complete", complete_exercise_path(exercise), method: :post, class: "bg-electric text-black px-4 py-1.5 rounded text-[10px] font-black tracking-widest uppercase hover:bg-electric/90 transition-colors" %>
+            <% end %>
           </div>
 
           <div class="space-y-1">
